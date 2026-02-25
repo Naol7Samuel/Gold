@@ -13,7 +13,7 @@ import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
-const routerBase = import.meta.env.BASE_URL || "/";
+const routerBase = import.meta.env.BASE_URL === "./" ? "/" : (import.meta.env.BASE_URL || "/");
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
