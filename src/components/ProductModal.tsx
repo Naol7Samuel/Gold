@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
-import { X } from "lucide-react";
+import { Bookmark, X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -39,6 +39,19 @@ interface ProductModalProps {
 export default function ProductModal({ product, open, onOpenChange }: ProductModalProps) {
   if (!product) return null;
 
+  const specItems = [
+    { label: "Shape", value: product.specs.shape },
+    { label: "Cut", value: product.specs.cut },
+    { label: "Color", value: product.specs.color },
+    { label: "Clarity", value: product.specs.clarity },
+    { label: "Carat", value: product.specs.carat },
+    { label: "Fluorescence", value: product.specs.fluorescence },
+    { label: "Polish", value: product.specs.polish },
+    { label: "Symmetry", value: product.specs.symmetry },
+    { label: "Certification", value: product.specs.certification },
+    { label: "Origin", value: product.specs.origin },
+  ];
+
   const handleSave = () => {
     console.log("Saved", product);
   };
@@ -65,64 +78,71 @@ export default function ProductModal({ product, open, onOpenChange }: ProductMod
 
         <DialogPrimitive.Content
           className={cn(
-            "fixed inset-0 z-50 flex flex-col md:flex-row bg-onyx text-white",
+            "fixed inset-0 z-50 flex flex-col md:flex-row overflow-hidden",
             "data-[state=open]:animate-in data-[state=closed]:animate-out",
             "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
             "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
           )}
+          style={{ backgroundColor: "#070707", color: "#F5F5F5" }}
         >
-          {/* left side: image */}
-          <div className="md:w-1/2 flex items-center justify-center p-4 bg-black">
+          <div className="relative flex h-[44vh] items-center justify-center overflow-hidden bg-black p-6 md:h-auto md:w-1/2 md:p-10">
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/65 via-black/20 to-black/60" />
             <img
               src={product.image}
               alt={product.title}
-              className="max-w-full max-h-full object-contain"
+              className="relative z-10 h-full w-full object-contain md:max-h-[90vh]"
             />
           </div>
 
-          {/* right side: details */}
-          <div className="md:w-1/2 flex flex-col justify-between p-6 bg-gradient-to-b from-onyx via-black to-onyx">
-            <div>
-              <h2 className="text-3xl font-bold text-gold">{product.title}</h2>
-              <p className="mt-1 text-sm text-gray-400">Ref: {product.ref}</p>
+          <div className="flex flex-1 flex-col justify-between bg-gradient-to-b from-[#0E0E0E] via-[#090909] to-[#060606] p-6 sm:p-8 md:w-1/2 md:p-12">
+            <div className="space-y-8">
+              <div className="space-y-2">
+                <p className="text-xs uppercase tracking-[0.34em] text-[#D4AF37]">Fine Jewelry</p>
+                <h2
+                  className="text-4xl font-medium leading-tight md:text-5xl"
+                  style={{ fontFamily: "\"Didot\", \"Bodoni MT\", \"Times New Roman\", serif" }}
+                >
+                  {product.title}
+                </h2>
+                <p className="text-sm tracking-[0.14em] text-[#C9C9C9]">REF: {product.ref}</p>
+              </div>
 
-              <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-                {Object.entries(product.specs).map(([key, val]) => (
-                  <div key={key} className="flex">
-                    <span className="w-1/2 font-semibold capitalize">
-                      {key.replace(/([A-Z])/g, " $1")}
-                    </span>
-                    <span className="w-1/2">{val}</span>
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
+                {specItems.map((item) => (
+                  <div key={item.label} className="rounded-sm border border-[#2A2A2A] bg-[#0D0D0D] px-4 py-3">
+                    <p className="text-[11px] uppercase tracking-[0.22em] text-[#D4AF37]">{item.label}</p>
+                    <p className="mt-2 text-sm font-light text-[#F5F5F5]">{item.value}</p>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="mt-6">
-              <div className="mt-4 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:items-center">
+              <button
+                onClick={handleReserve}
+                className="h-12 min-w-[180px] rounded-sm bg-[#D4AF37] px-7 text-sm font-medium uppercase tracking-[0.16em] text-black transition hover:brightness-110"
+              >
+                Reserve Now
+              </button>
+              <button
+                onClick={handleEnquire}
+                className="h-12 min-w-[160px] rounded-sm border border-[#D4AF37] bg-transparent px-7 text-sm font-medium uppercase tracking-[0.16em] text-[#D4AF37] transition hover:bg-[#D4AF37]/10"
+              >
+                Enquire
+              </button>
+              <div className="sm:ml-auto">
                 <button
                   onClick={handleSave}
-                  className="px-4 py-2 border border-gold text-gold rounded hover:bg-gold/10 transition"
+                  aria-label={`Save ${product.title}`}
+                  className="flex h-12 w-12 items-center justify-center rounded-sm border border-[#3A3A3A] bg-[#111111] text-[#F5F5F5] transition hover:border-[#D4AF37] hover:text-[#D4AF37]"
                 >
-                  Save
-                </button>
-                <button
-                  onClick={handleEnquire}
-                  className="px-4 py-2 bg-gold text-onyx rounded hover:bg-gold/90 transition"
-                >
-                  Enquire
-                </button>
-                <button
-                  onClick={handleReserve}
-                  className="px-4 py-2 bg-gold/80 text-onyx rounded hover:bg-gold transition"
-                >
-                  Reserve&nbsp;Now
+                  <Bookmark className="h-4 w-4" />
                 </button>
               </div>
             </div>
           </div>
 
-          <DialogPrimitive.Close className="absolute top-4 right-4 text-white hover:text-gold focus:outline-none">
+          <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm border border-[#2F2F2F] bg-black/40 p-2 text-[#F5F5F5] transition hover:border-[#D4AF37] hover:text-[#D4AF37] focus:outline-none">
             <X className="h-6 w-6" />
             <span className="sr-only">Close</span>
           </DialogPrimitive.Close>
