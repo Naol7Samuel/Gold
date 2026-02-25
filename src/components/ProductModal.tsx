@@ -39,6 +39,19 @@ interface ProductModalProps {
 export default function ProductModal({ product, open, onOpenChange }: ProductModalProps) {
   if (!product) return null;
 
+  const handleSave = () => {
+    console.log("Saved", product);
+  };
+
+  const handleEnquire = () => {
+    const subject = encodeURIComponent(`Enquiry about ${product.title}`);
+    window.location.href = `mailto:?subject=${subject}`;
+  };
+
+  const handleReserve = () => {
+    console.log("Reserved", product);
+  };
+
   return (
     <DialogPrimitive.Root open={open} onOpenChange={onOpenChange}>
       <DialogPrimitive.Portal>
@@ -86,15 +99,23 @@ export default function ProductModal({ product, open, onOpenChange }: ProductMod
             </div>
 
             <div className="mt-6">
-              <p className="text-xl font-semibold">{product.price}</p>
               <div className="mt-4 flex flex-wrap gap-3">
-                <button className="px-4 py-2 border border-gold text-gold rounded hover:bg-gold/10 transition">
+                <button
+                  onClick={handleSave}
+                  className="px-4 py-2 border border-gold text-gold rounded hover:bg-gold/10 transition"
+                >
                   Save
                 </button>
-                <button className="px-4 py-2 bg-gold text-onyx rounded hover:bg-gold/90 transition">
+                <button
+                  onClick={handleEnquire}
+                  className="px-4 py-2 bg-gold text-onyx rounded hover:bg-gold/90 transition"
+                >
                   Enquire
                 </button>
-                <button className="px-4 py-2 bg-gold/80 text-onyx rounded hover:bg-gold transition">
+                <button
+                  onClick={handleReserve}
+                  className="px-4 py-2 bg-gold/80 text-onyx rounded hover:bg-gold transition"
+                >
                   Reserve&nbsp;Now
                 </button>
               </div>

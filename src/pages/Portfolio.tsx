@@ -8,7 +8,6 @@ import portfolio3 from '@/assets/portfolio-3.jpg';
 import portfolio4 from '@/assets/portfolio-4.jpg';
 import gemini from '@/assets/Gemini_Generated_Image_72r93p72r93p72r9.png';
 import g1_2 from '@/assets/g1 (2).png';
-import Gallery from '@/components/Gallery';
 
 const categories = ['All', 'Refining', 'Casting', 'Custom'];
 
@@ -223,20 +222,6 @@ export default function Portfolio() {
               )}
             </button>
           ))}
-        </div>
-      </section>
-
-      {/* example gallery demo using ProductModal */}
-      <section className="section-padding">
-        <div className="mx-auto max-w-7xl">
-          <FadeUp>
-            <p className="font-body text-sm font-light uppercase tracking-[0.4em] text-primary">Demo</p>
-            <h2 className="luxury-subheading mt-4 text-foreground">Interactive Product Gallery</h2>
-          </FadeUp>
-
-          <div className="mt-10">
-            <Gallery />
-          </div>
         </div>
       </section>
 
