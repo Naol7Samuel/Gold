@@ -8,6 +8,7 @@ import portfolio3 from '@/assets/portfolio-3.jpg';
 import portfolio4 from '@/assets/portfolio-4.jpg';
 import gemini from '@/assets/Gemini_Generated_Image_72r93p72r93p72r9.png';
 import g1_2 from '@/assets/g1 (2).png';
+import Gallery from '@/components/Gallery';
 
 const categories = ['All', 'Refining', 'Casting', 'Custom'];
 
